@@ -168,35 +168,43 @@ public interface List<E> extends Collection<E> {
      * Returns an array containing all of the elements in this list in
      * proper sequence (from first to last element); the runtime type of
      * the returned array is that of the specified array.  If the list fits
-     * in the specified array, it is returned therein.  Otherwise, a new
+     * in the specified array, it is returned therein(那个).  Otherwise, a new
      * array is allocated with the runtime type of the specified array and
      * the size of this list.
+		返回一个适当顺序(从首个到最后一个)的包含list所有元素的array数组；运行时返回的数组的类型是传参数指定的数组类型。
+		如果传递的指定数组大小可以容纳list的大小，就返回传递的数组。否则会新分配一个数组存放list元素，大小与list一致。
      *
      * <p>If the list fits in the specified array with room to spare (i.e.,
      * the array has more elements than the list), the element in the array
      * immediately following the end of the list is set to <tt>null</tt>.
      * (This is useful in determining the length of the list <i>only</i> if
      * the caller knows that the list does not contain any null elements.)
+		如果数组大小length比list size 大，数组的元素会随之将最后的那些元素设为null。(只有在调用者知道list不包含任何null元素的时候，可以有效判断list的大小)
      *
      * <p>Like the {@link #toArray()} method, this method acts as bridge between
      * array-based and collection-based APIs.  Further, this method allows
      * precise control over the runtime type of the output array, and may,
      * under certain circumstances, be used to save allocation costs.
+		这方法类似toArray方法，起桥梁作用。更进一步的，这方法允许对返回的数组的类型明确的控制， 这样的话在某些情况下，对内存的分配消耗有优化。
      *
      * <p>Suppose <tt>x</tt> is a list known to contain only strings.
-     * The following code can be used to dump the list into a newly
+     * The following code can be used to dump(倾倒，卸载，转换) the list into a newly
      * allocated array of <tt>String</tt>:
+		假设x是一个只包含string的list，以下代码可以用来将list 转换 成一个新分配的string数组。
+	 
      *
      * <pre>
      *     String[] y = x.toArray(new String[0]);</pre>
      *
-     * Note that <tt>toArray(new Object[0])</tt> is identical in function to
+     * Note that <tt>toArray(new Object[0])</tt> is identical(完全相同) in function to
      * <tt>toArray()</tt>.
      *
      * @param a the array into which the elements of this list are to
      *          be stored, if it is big enough; otherwise, a new array of the
-     *          same runtime type is allocated for this purpose.
+     *          same runtime type is allocated for this purpose. 
+				如果参数array足够存放所有list元素，则返回此参数数组，否则会重新新建相同类型的数组存放所有list元素。
      * @return an array containing the elements of this list
+				返回一个包含list所有元素的array。
      * @throws ArrayStoreException if the runtime type of the specified array
      *         is not a supertype of the runtime type of every element in
      *         this list
@@ -210,13 +218,16 @@ public interface List<E> extends Collection<E> {
     /**
      * Appends the specified element to the end of this list (optional
      * operation).
+		追加指定元素到list末尾。
      *
      * <p>Lists that support this operation may place limitations on what
-     * elements may be added to this list.  In particular, some
+     * elements may be added to this list.  In particular(特别地), some
      * lists will refuse to add null elements, and others will impose
      * restrictions on the type of elements that may be added.  List
      * classes should clearly specify in their documentation any restrictions
      * on what elements may be added.
+		Lists 支持对放置的元素有限制。特别地，一些list 会不允许放入null值，而有一些将对放入的元素有类型要求。
+		实现List接口的classes们 应该在他们的文档中清晰地写明白添加元素的这些约束。
      *
      * @param e element to be appended to this list
      * @return <tt>true</tt> (as specified by {@link Collection#add})
@@ -277,6 +288,16 @@ public interface List<E> extends Collection<E> {
      */
     boolean containsAll(Collection<?> c);
 
+	//=============================================================================
+	/*
+	 The behavior of this operation is undefined if the specified collection is modified while the
+     * operation is in progress.  (Note that this will occur if the specified collection is this list, and it's nonempty.)
+		许多list的操作都有这样的话：
+		当修改指定的集合同事该集合处于某个操作过程中，操作的结果是很难预测的。(即并发修改问题。)
+	*/
+	 //=============================================================================
+	
+	
     /**
      * Appends all of the elements in the specified collection to the end of
      * this list, in the order that they are returned by the specified
@@ -350,11 +371,12 @@ public interface List<E> extends Collection<E> {
     boolean removeAll(Collection<?> c);
 
     /**
-     * Retains only the elements in this list that are contained in the
+     * Retains(保留) only the elements in this list that are contained in the
      * specified collection (optional operation).  In other words, removes
      * from this list all of its elements that are not contained in the
      * specified collection.
-     *
+		只保留list中与指定集合相同的元素。换句话说，移除list中 指定集合 没有的元素。
+	 
      * @param c collection containing elements to be retained in this list
      * @return <tt>true</tt> if this list changed as a result of the call
      * @throws UnsupportedOperationException if the <tt>retainAll</tt> operation
@@ -394,6 +416,7 @@ public interface List<E> extends Collection<E> {
      * definition ensures that the equals method works properly across
      * different implementations of the <tt>List</tt> interface.
      *
+		判断是否equals的规则：每个元素相同且顺序相同。
      * @param o the object to be compared for equality with this list
      * @return <tt>true</tt> if the specified object is equal to this list
      */
@@ -496,6 +519,8 @@ public interface List<E> extends Collection<E> {
      * More formally, returns the lowest index <tt>i</tt> such that
      * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
      * or -1 if there is no such index.
+		返回指定元素首次在list中出现的索引位置，如果没有返回 -1。
+	
      *
      * @param o element to search for
      * @return the index of the first occurrence of the specified element in
@@ -515,6 +540,7 @@ public interface List<E> extends Collection<E> {
      * More formally, returns the highest index <tt>i</tt> such that
      * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
      * or -1 if there is no such index.
+		返回指定元素最后在list中出现的索引位置，如果没有返回 -1。
      *
      * @param o element to search for
      * @return the index of the last occurrence of the specified element in
@@ -557,21 +583,24 @@ public interface List<E> extends Collection<E> {
      */
     ListIterator<E> listIterator(int index);
 
-    // View
-
+   
+   // View---相当于快照，不是copy的副本
     /**
      * Returns a view of the portion of this list between the specified
      * <tt>fromIndex</tt>, inclusive, and <tt>toIndex</tt>, exclusive.  (If
      * <tt>fromIndex</tt> and <tt>toIndex</tt> are equal, the returned list is
      * empty.)  The returned list is backed by this list, so non-structural
-     * changes in the returned list are reflected in this list, and vice-versa.
+     * changes in the returned list are reflected in this list, and vice-versa(反之亦然).
      * The returned list supports all of the optional list operations supported
      * by this list.<p>
+		返回对于list部分元素的视图，包括开始索引，不包括结束索引(fromIndex~toIndex-1).
+		（如果开始索引==结束索引，返回空LIST）
+		返回的list是由原来list支持的(关联)，因此非结构化的改变同样会反映在原来的list上，反之亦然。
      *
-     * This method eliminates the need for explicit range operations (of
+     * This method eliminates(消除了) the need for explicit(明确) range operations (of
      * the sort that commonly exist for arrays).  Any operation that expects
      * a list can be used as a range operation by passing a subList view
-     * instead of a whole list.  For example, the following idiom
+     * instead of a whole list.  For example, the following idiom(习语，风格)
      * removes a range of elements from a list:
      * <pre>
      *      list.subList(from, to).clear();
@@ -579,12 +608,19 @@ public interface List<E> extends Collection<E> {
      * Similar idioms may be constructed for <tt>indexOf</tt> and
      * <tt>lastIndexOf</tt>, and all of the algorithms in the
      * <tt>Collections</tt> class can be applied to a subList.<p>
+		这个方法消除了明确的范围操作的需要。
+		任何期望操作list的操作可以通过传入subList进行范围操作，而不是整个list。
+		例如，以下的风格从list中移除 一定范围的元素。
+		理解：假如我要删除 1-5的元素，不用知道他们的索引再remove，可以通过subList.clear()； subList的操作会反应在原来的List中。
+	 
      *
-     * The semantics of the list returned by this method become undefined if
+     * The semantics(语义) of the list returned by this method become undefined if
      * the backing list (i.e., this list) is <i>structurally modified</i> in
      * any way other than via the returned list.  (Structural modifications are
-     * those that change the size of this list, or otherwise perturb it in such
+     * those that change the size of this list, or otherwise(其他) perturb(扰乱) it in such
      * a fashion that iterations in progress may yield incorrect results.)
+		在返回subList过程中，当原来的list发生结构性的变化，subList方法返回的list将是不可预测的。
+		(结构化的修改就是那些 改变list的大小 或者 其他扰乱如此顺序的操作，在其遍历过程中会产生不正确的结果。)
      *
      * @param fromIndex low endpoint (inclusive) of the subList
      * @param toIndex high endpoint (exclusive) of the subList
