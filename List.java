@@ -58,20 +58,26 @@ package java.util;
  * extreme caution is advised: the <tt>equals</tt> and <tt>hashCode</tt>
  * methods are no longer well defined on such a list.
  *
- * <p>Some list implementations have restrictions on the elements that
- * they may contain.  For example, some implementations prohibit null elements,
- * and some have restrictions on the types of their elements.  Attempting to
- * add an ineligible element throws an unchecked exception, typically
- * <tt>NullPointerException</tt> or <tt>ClassCastException</tt>.  Attempting
- * to query the presence of an ineligible element may throw an exception,
- * or it may simply return false; some implementations will exhibit the former
- * behavior and some will exhibit the latter.  More generally, attempting an
- * operation on an ineligible element whose completion would not result in
- * the insertion of an ineligible element into the list may throw an
- * exception or it may succeed, at the option of the implementation.
- * Such exceptions are marked as "optional" in the specification for this
- * interface.
+ 
+ 
+ * <p>Some list implementations have restrictions on the elements that they may contain.  
+		某些list的实现对于容纳的元素有所限制。
+ * For example, some implementations prohibit null elements,and some have restrictions on the types of their elements.
+		例如，有些实现不允许空值元素，有一些对元素的类型有限制。
+ *   Attempting to add an ineligible(不合格) element throws an unchecked exception, typically <tt>NullPointerException</tt> or <tt>ClassCastException</tt>. 
+		尝试去添加一个不合法的元素会抛出一个非编译的异常,典型的有 空指针异常 和 类型转换异常。
+ *  Attempting to query the presence of an ineligible element may throw an exception,or it may simply return false;
+		尝试去查询 不合法的元素是否存在也可能抛出异常 或者 简单地返回 false;
+ *  some implementations will exhibit the former behavior and some will exhibit the latter.  
+		某些实现会表现前者的行为(抛出异常)，某些会表现为后者(返回false)。
+ * More generally, attempting an operation on an ineligible element (whose completion would not result in the insertion of an ineligible element into the list) may throw an exception or it may succeed, 
+	at the option of the implementation.
+		更通常的说，尝试操作一个(不会造成list插入了非法元素)的不合法的元素可能会抛出异常，也可能成功，具体选择根据不同的实现。
+ * Such exceptions are marked as "optional" in the specification for this interface.
+	如此的异常会标志 "可选择的" 在接口定义里。(例如：line 136)
  *
+ 
+ 
  * <p>This interface is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
  * Java Collections Framework</a>.
@@ -99,8 +105,8 @@ public interface List<E> extends Collection<E> {
     /**
      * Returns the number of elements in this list.  If this list contains
      * more than <tt>Integer.MAX_VALUE</tt> elements, returns
-     * <tt>Integer.MAX_VALUE</tt>.
-     *
+     * <tt>Integer.MAX_VALUE</tt>.	
+	 * 返回list的size，如果超过Integer的MAX，返回Integer的MAX。
      * @return the number of elements in this list
      */
     int size();
@@ -117,7 +123,8 @@ public interface List<E> extends Collection<E> {
      * More formally, returns <tt>true</tt> if and only if this list contains
      * at least one element <tt>e</tt> such that
      * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
-     *
+     *如果list包含指定的元素，返回true。
+	 
      * @param o element whose presence in this list is to be tested
      * @return <tt>true</tt> if this list contains the specified element
      * @throws ClassCastException if the type of the specified element
@@ -126,12 +133,14 @@ public interface List<E> extends Collection<E> {
      * @throws NullPointerException if the specified element is null and this
      *         list does not permit null elements
      * (<a href="Collection.html#optional-restrictions">optional</a>)
+		以上的异常是否抛出是可选择的，取决于子类的实现。
      */
     boolean contains(Object o);
 
     /**
-     * Returns an iterator over the elements in this list in proper sequence.
+     * Returns an iterator over the elements in this list in proper(适当的) sequence.
      *
+	 * 返回一个有合适顺序的列表元素迭代器。
      * @return an iterator over the elements in this list in proper sequence
      */
     Iterator<E> iterator();
@@ -139,14 +148,15 @@ public interface List<E> extends Collection<E> {
     /**
      * Returns an array containing all of the elements in this list in proper
      * sequence (from first to last element).
-     *
+     *	返回一个有适当顺序且包含list所有元素的数组。
      * <p>The returned array will be "safe" in that no references to it are
      * maintained by this list.  (In other words, this method must
      * allocate a new array even if this list is backed by an array).
      * The caller is thus free to modify the returned array.
-     *
-     * <p>This method acts as bridge between array-based and collection-based
-     * APIs.
+     *	返回的数组是安全的，因为没有引用指向它。(换句话说，即时这个list由数组支持(List底层有数组实现)，这个方法也会重新分配一个新的数组)	
+		理解：list内部由array存放数组，但是这个array是私有的，不会暴露外界。这个方法返回的是新的array，可以放心修改，不会影响list内部的Array
+     * <p>This method acts as bridge between array-based and collection-based APIs.
+		这个方法 扮演着 数组 和 集合 转换APIs的 沟通桥梁的角色。
      *
      * @return an array containing all of the elements in this list in proper
      *         sequence
