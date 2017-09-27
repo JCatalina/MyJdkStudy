@@ -42,17 +42,17 @@ package java.util;
 	因此，如果不知道它的具体实现，迭代list的元素通常使用索引会更胜一筹。
  *
  * The <tt>List</tt> interface provides a special iterator, called a <tt>ListIterator</tt>, that allows element insertion and replacement, and bidirectional(双向bi-directional) access in addition to the normal operations that the <tt>Iterator</tt> interface provides. 
-	除了Iterator接口提供的正常操作外,List 接口提供了一个特殊的迭代器，叫ListIterator-允许元素 插入 和 替换,和 双向访问元素	
- * A method is provided to obtain a
- * list iterator that starts at a specified position in the list.<p>
+	除了Iterator接口提供的正常操作外,List 接口提供了一个特殊的迭代器，叫ListIterator-允许元素 插入 和 替换,和 双向访问元素。
+ * A method is provided to obtain a list iterator that starts at a specified position in the list.<p>
+	还有一个方法，可以获得从指定位置开始迭代的迭代器。
  *
- * The <tt>List</tt> interface provides two methods to search for a specified
- * object.  From a performance standpoint, these methods should be used with
- * caution.  In many implementations they will perform costly linear
- * searches.<p>
+ * The <tt>List</tt> interface provides two methods to search for a specified object.
+	List 接口提供两种方法搜索指定对象。
+ * From a performance(巨大) standpoint, these methods should be used with caution.  In many implementations they will perform costly(花费巨大) linear searches.<p>
+	站在性能的角度看，这些方法要谨慎使用。在很多实现中，它们会表现出昂贵的线性搜索。
  *
- * The <tt>List</tt> interface provides two methods to efficiently insert and
- * remove multiple elements at an arbitrary point in the list.<p>
+ * The <tt>List</tt> interface provides two methods to efficiently insert and remove multiple elements at an arbitrary(任意) point in the list.<p>
+	List接口提供两种方法在任意位置高效地插入和移除多个元素。
  *
  * Note: While it is permissible for lists to contain themselves as elements,
  * extreme caution is advised: the <tt>equals</tt> and <tt>hashCode</tt>
