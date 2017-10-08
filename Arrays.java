@@ -12,7 +12,7 @@ import java.lang.reflect.*;
  * This class contains various methods for manipulating arrays (such as
  * sorting and searching). This class also contains a static factory
  * that allows arrays to be viewed as lists.
-	Arrays类包含不同操作数组的方法(如：排序和搜索。)
+	Arrays类包含不同操作数组的方法(如：排序和搜索。) 排序方法有：快速排序，归并排序，冒泡排序    搜索：二分搜索
 	还包含一个静态工厂 让数组看起来像list(数组与list的转换，强调：view这词，就是说实质还是数组，跟ArrayList里面的toArray()有关系)。
  *
  * <p>The methods in this class all throw a {@code NullPointerException},
@@ -532,18 +532,27 @@ public class Arrays {
     }
 
     /**
-     * Tuning parameter: list size at or below which insertion sort will be
+     * Tuning(协调) parameter: list size at or below which insertion sort will be
      * used in preference to mergesort.
      * To be removed in a future release.
+		
+		协调参数：当排序数组>=7才使用归并排序。
      */
     private static final int INSERTIONSORT_THRESHOLD = 7;
 
-    /**
-     * Src is the source array that starts at index 0
-     * Dest is the (possibly larger) array destination with a possible offset
-     * low is the index in dest to start sorting
+/**==================================================================================================================================================================================================================**/
+	
+    /**	归并排序：
+     * Src is the source array that starts at index 0  
+		--Src是源数组。
+     * Dest is the (possibly larger) array destination with a possible offset 
+		--Dest是目标数组。
+     * low is the index in dest to start sorting  
+		--low是目标数组 排序开始位置。
      * high is the end index in dest to end sorting
+		--high是目标数组 排序结束位置。
      * off is the offset to generate corresponding low, high in src
+		--off 是在src中形成 low,high的偏移量。
      * To be removed in a future release.
      */
     private static void mergeSort(Object[] src,
@@ -553,6 +562,7 @@ public class Arrays {
                                   int off) {
         int length = high - low;
 
+		/**长度小于7的话-->使用冒泡排序排序子部分(数量太少不使用归并排序了)**/
         // Insertion sort on smallest arrays
         if (length < INSERTIONSORT_THRESHOLD) {
             for (int i=low; i<high; i++)
@@ -561,8 +571,9 @@ public class Arrays {
                     swap(dest, j, j-1);
             return;
         }
-
-        // Recursively sort halves of dest into src
+		
+		/**长度大于7的话-->使用归并排序子部分**/
+        // Recursively sort halves of dest into src  把dest分成一半之后，充当src递归地排序
         int destLow  = low;
         int destHigh = high;
         low  += off;
@@ -577,7 +588,8 @@ public class Arrays {
             System.arraycopy(src, low, dest, destLow, length);
             return;
         }
-
+		
+		/**合并排好序的子序列**/
         // Merge sorted halves (now in src) into dest
         for(int i = destLow, p = low, q = mid; i < destHigh; i++) {
             if (q >= high || p < mid && ((Comparable)src[p]).compareTo(src[q])<=0)
