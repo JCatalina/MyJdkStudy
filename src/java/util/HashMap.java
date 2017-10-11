@@ -1,4 +1,3 @@
-/*
  * Copyright (c) 1997, 2010, Oracle and/or its affiliates. All rights reserved.
  * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
@@ -182,7 +181,7 @@ public class HashMap<K,V>
     transient int modCount;
 
     /**
-     * The default threshold of map capacity above which alternative hashing is
+     * The default threshold of map capacity above which alternative(替代/可供选择)hashing is
      * used for String keys. Alternative hashing reduces the incidence of
      * collisions due to weak hash code calculation for String keys.
      * <p/>
@@ -251,12 +250,14 @@ public class HashMap<K,V>
     /**
      * If {@code true} then perform alternative hashing of String keys to reduce
      * the incidence of collisions due to weak hash code calculation.
+		表示 是否采用可选(另外)的hash函数来减少哈希冲突。
      */
     transient boolean useAltHashing;
 
     /**
      * A randomizing value associated with this instance that is applied to
      * hash code of keys to make hash collisions harder to find.
+		哈希种子->让哈希冲突更难发生
      */
     transient final int hashSeed = sun.misc.Hashing.randomHashSeed(this);
 
@@ -330,7 +331,7 @@ public class HashMap<K,V>
 
     /**
      * Initialization hook for subclasses. This method is called
-     * in all constructors and pseudo-constructors (clone, readObject)
+     * in all constructors and pseudo(伪)-constructors (clone, readObject)
      * after HashMap has been initialized but before any entries have
      * been inserted.  (In the absence of this method, readObject would
      * require explicit knowledge of subclasses.)
@@ -339,11 +340,19 @@ public class HashMap<K,V>
     }
 
     /**
-     * Retrieve object hash code and applies a supplemental hash function to the
+     * Retrieve object hash code and applies a supplemental(追加，补充) hash function to the
      * result hash, which defends against poor quality hash functions.  This is
-     * critical because HashMap uses power-of-two length hash tables, that
+     * critical(重要的) because HashMap uses power-of-two length hash tables, that
      * otherwise encounter collisions for hashCodes that do not differ
      * in lower bits. Note: Null keys always map to hash 0, thus index 0.
+		重新获取对象的hashcode 和 提供一个补充的hash函数(为了更好地防止hash函数的缺陷。)
+		这个是很重要的，因为hashMap长度是2的幂，遇到的hash冲突可能是因为低位相同而导致的。
+		
+		就是为了纠正hashcode函数的缺陷，因为hashmap的capacity的值是2的指数个，如果两个对象的hashCode值的低位相同，很有可能导致hashCode/capacity的值相同，就会出现冲突。
+		0101 0000 0000 1111 = 20495
+		0111 0000 0000 1111 = 28687
+		假如hashmap的capacity是16，那么20495%16 = 15,28687%16=15,就冲突了
+	 
      */
     final int hash(Object k) {
         int h = 0;
@@ -357,7 +366,7 @@ public class HashMap<K,V>
         h ^= k.hashCode();
 
         // This function ensures that hashCodes that differ only by
-        // constant multiples at each bit position have a bounded
+        // constant multiples(倍数) at each bit position have a bounded
         // number of collisions (approximately 8 at default load factor).
         h ^= (h >>> 20) ^ (h >>> 12);
         return h ^ (h >>> 7) ^ (h >>> 4);
@@ -402,7 +411,9 @@ public class HashMap<K,V>
      * possible that the map explicitly maps the key to {@code null}.
      * The {@link #containsKey containsKey} operation may be used to
      * distinguish these two cases.
-     *
+		这个方法返回null有两种情况：要么就是不存在这样的key，要么就是存在这样的key，value为null。
+		可用containsKey方法区分这两种。
+	 *
      * @see #put(Object, Object)
      */
     public V get(Object key) {
@@ -419,6 +430,8 @@ public class HashMap<K,V>
      * for the sake of performance in the two most commonly used
      * operations (get and put), but incorporated with conditionals in
      * others.
+		Null值key 映射在索引为0的地方。
+		这个null值情况拆分出来是为了在get和put操作中的性能，也包含其他情况。
      */
     private V getForNullKey() {
         for (Entry<K,V> e = table[0]; e != null; e = e.next) {
@@ -584,6 +597,9 @@ public class HashMap<K,V>
                     e.hash = null == e.key ? 0 : hash(e.key);
                 }
                 int i = indexFor(e.hash, newCapacity);
+				/*
+				* 头插法
+				*/
                 e.next = newTable[i];
                 newTable[i] = e;
                 e = next;
@@ -755,6 +771,7 @@ public class HashMap<K,V>
     /**
      * Returns a shallow copy of this <tt>HashMap</tt> instance: the keys and
      * values themselves are not cloned.
+		keys和values都是同一个，浅拷贝。
      *
      * @return a shallow copy of this map
      */
@@ -879,7 +896,7 @@ public class HashMap<K,V>
     private abstract class HashIterator<E> implements Iterator<E> {
         Entry<K,V> next;        // next entry to return
         int expectedModCount;   // For fast-fail
-        int index;              // current slot
+        int index;              // current slot(跟踪)
         Entry<K,V> current;     // current entry
 
         HashIterator() {
