@@ -870,12 +870,12 @@ public class HashMap<K,V>
      * Subclass overrides this to alter the behavior of put method.
      */
     void addEntry(int hash, K key, V value, int bucketIndex) {
+		//当size大小大于等于阈值，扩容
         if ((size >= threshold) && (null != table[bucketIndex])) {
-            resize(2 * table.length);
+            resize(2 * table.length);//扩容为原来的length的两倍
             hash = (null != key) ? hash(key) : 0;
             bucketIndex = indexFor(hash, table.length);
         }
-
         createEntry(hash, key, value, bucketIndex);
     }
 
