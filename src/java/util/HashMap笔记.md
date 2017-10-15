@@ -129,3 +129,9 @@
 >
 >2、源码里面运用了很多关于位运算的加快计算和查找的搜索速度。
 
+
+
+>参考：
+>
+>http://blog.csdn.net/ghsau/article/details/16890151
+
